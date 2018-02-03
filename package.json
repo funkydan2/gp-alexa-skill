@@ -1,0 +1,30 @@
+{
+  "name": "gympie-pres",
+  "version": "0.0.1",
+  "description": "Gympie Prebyterian Alexa Skill",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "node index.js"
+  },
+  "author": "Daniel Saunders",
+  "license": "MIT",
+  "dependencies": {
+    "airtable": "^0.5.2",
+    "alexa-app": "^4.2.0",
+    "amazon-date-parser": "^0.2.0",
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^5.0.0",
+    "lodash": "^4.17.4",
+    "express": "^4.16.2",
+    "ejs": "^2.5.7"
+  },
+  "keywords": [
+    "alexa",
+    "amazon",
+    "echo",
+    "skills",
+    "airtable"
+  ]
+}
