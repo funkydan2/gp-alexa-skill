@@ -56,39 +56,33 @@ GPDataHelper.prototype.getSermonSeries = function(date){
 }	 
 
 GPDataHelper.prototype.getSermonPassage = function(date){
-return new Promise (function(resolve,reject){
-		getRecordForNextService(date).then(function(record){
+return getRecordForNextService(date).then(function(record){
     		console.log(record.get('Sermon Passage'));
-			resolve(record.get('Sermon Passage'));
+			return record.get('Sermon Passage');
 		}).catch(function(error){
 			console.log('Failed', error);
-			reject(error);
+			return error;
 		});
-	})
 }
 
 GPDataHelper.prototype.getOtherPassage = function(date){
-return new Promise (function(resolve,reject){
-		getRecordForNextService(date).then(function(record){
+return getRecordForNextService(date).then(function(record){
     		console.log(record.get('Other Reading'));
-			resolve(record.get('Other Reading'));
+			return record.get('Other Reading');
 		}).catch(function(error){
 			console.log('Failed', error);
-			reject(error);
+			return error;
 		});
-	})
 }
 
 GPDataHelper.prototype.getSermonTitle = function(date){
-	return new Promise (function(resolve,reject){
-		getRecordForNextService(date).then(function(record){
+	return getRecordForNextService(date).then(function(record){
     		console.log(record.get('Sermon Title'));
-			resolve(record.get('Sermon Title'));
+			return record.get('Sermon Title');
 		}).catch(function(error){
 			console.log('Failed', error);
-			reject(error);
+			return error;
 		});
-	})
 }
 
 module.exports = GPDataHelper;
