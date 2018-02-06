@@ -1,5 +1,4 @@
-/Gympie Presbyterian Alexa Skill
-=========================
+# Gympie Presbyterian Alexa Skill
 
 My first attempt to make a skill for Alexa.
 

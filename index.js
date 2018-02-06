@@ -13,10 +13,24 @@ var GPDataHelper = require('./gp_data_helper');
 const PORT = process.env.PORT || 3000;
 
 function convertAmDate(amDate){
-    var dateObj = new AmazonDateParser(amDate);
-    //We're going to assume if the user says 'This Week' they mean 
-    //'the sermon at the first service which happens this week!
-    return dateObj.startDate.toString();
+    // This function returns TODAY's date if the amDate is undefined.
+    if (_.isEmpty(amDate)) {
+      var today = new Date();
+      var dd = today.getDate();
+      var mm = today.getMonth() + 1;
+      var yyyy = today.getFullYear();
+      
+      if (dd < 10) { dd = '0' + dd;}
+      if (mm < 10) { mm = '0' + mm;}
+      
+      return yyyy + '-' + mm + '-' + dd;
+      }
+    else {
+      var dateObj = new AmazonDateParser(amDate);
+      //We're going to assume if the user says 'This Week' they mean 
+      //'the sermon at the first service which happens this week!
+      return dateObj.startDate.toString();
+    }
 }
 
 // POST calls to / in express will be handled by the app.request() function
@@ -44,25 +58,19 @@ alexaApp.intent('sermontitle', {
 	},
   function(req, res) {
     //get the slot
-    var amDate = req.slot('DATE');
-    var reprompt = 'Tell me a date to get the sermon title. You can say this Sunday.';
-    if (_.isEmpty(amDate)) {
-      var prompt = 'I didn\'t hear a date. Please tell me a date.';
-      res.say(prompt).reprompt(reprompt).shouldEndSession(false);
-      return true;
-    } else {
-      var date = convertAmDate(amDate);
-      var gpHelper = new GPDataHelper();
-      return gpHelper.getSermonTitle(date).then(function(sermonTitle) {
-      	var prompt = 'The sermon title is ' + sermonTitle;
-        console.log(prompt);
-        res.say(prompt).send();
-      }).catch(function(err) {
-        console.log(err.statusCode);
-        var prompt = 'I didn\'t have a sermon title for ' + date;
-        res.say(prompt).reprompt(reprompt).shouldEndSession(false).send();
-      });
-    }
+    var date = convertAmDate(req.slot('DATE'));
+    var reprompt = 'I don\'t have a sermon title for ' + date + ' Please try again';
+    
+    var gpHelper = new GPDataHelper();
+    return gpHelper.getSermonTitle(date).then(function(sermonTitle) {
+    	var prompt = 'The sermon title is ' + sermonTitle;
+      console.log(prompt);
+      res.say(prompt).send();
+    }).catch(function(err) {
+      console.log(err.statusCode);
+      var prompt = 'I don\'t have a sermon title for ' + date;
+      res.say(prompt).reprompt(reprompt).shouldEndSession(false).send();
+    });
   }
 );
 
@@ -73,26 +81,21 @@ alexaApp.intent('sermonpassage', {
   		'utterances': ['{what is the|tell me the} {sermon|message|preaching} {passage} {|on|for} {-|DATE}']
 	},
   function(req, res) {
+    var reprompt = 'I don\'t have a sermon passage\. Please try again';
+
     //get the slot
-    var amDate = req.slot('DATE');
-    var reprompt = 'Tell me a date to get the sermon passage. You can say this Sunday.';
-    if (_.isEmpty(amDate)) {
-      var prompt = 'I didn\'t hear a date. Please tell me a date.';
-      res.say(prompt).reprompt(reprompt).shouldEndSession(false);
-      return true;
-    } else {
-      var date = convertAmDate(amDate);
-      var gpHelper = new GPDataHelper();
-      return gpHelper.getSermonPassage(date).then(function(sermonPassage) {
-      	var prompt = 'The sermon passage is ' + sermonPassage;
-        console.log(prompt);
-        res.say(prompt).send();
-      }).catch(function(err) {
-        console.log(err.statusCode);
-        var prompt = 'I didn\'t have a sermon passage for ' + date;
-        res.say(prompt).reprompt(reprompt).shouldEndSession(false).send();
-      });
-    }
+    var date = convertAmDate(req.slot('DATE'));
+    
+    var gpHelper = new GPDataHelper();
+    return gpHelper.getSermonPassage(date).then(function(sermonPassage) {
+    	var prompt = 'The sermon passage is ' + sermonPassage;
+      console.log(prompt);
+      res.say(prompt).send();
+    }).catch(function(err) {
+      console.log(err.statusCode);
+      var prompt = 'I don\'t have a sermon passage for ' + date;
+      res.say(prompt).reprompt(reprompt).shouldEndSession(false).send();
+    });
   }
 );
 
@@ -100,29 +103,23 @@ alexaApp.intent('otherpassage', {
   	'slots': {
     	'DATE' : 'AMAZON.DATE'
   	},
-  		'utterances': ['{what is the|tell me the} {other|second} {passage|reading|bible reading} {|on|for} {-|DATE}']
+  		'utterances': ['{what is the|tell me the} {other|second} {passage|reading|bible reading} {|is on|for} {-|DATE}']
 	},
   function(req, res) {
     //get the slot
-    var amDate = req.slot('DATE');
+    var date = convertAmDate(req.slot('DATE'));
     var reprompt = 'Tell me a date to get the other bible reading. You can say this Sunday.';
-    if (_.isEmpty(amDate)) {
-      var prompt = 'I didn\'t hear a date. Please tell me a date.';
-      res.say(prompt).reprompt(reprompt).shouldEndSession(false);
-      return true;
-    } else {
-      var date = convertAmDate(amDate);
-      var gpHelper = new GPDataHelper();
-      return gpHelper.getOtherPassage(date).then(function(otherPassage) {
-      	var prompt = 'The other passage is ' + otherPassage;
-        console.log(prompt);
-        res.say(prompt).send();
-      }).catch(function(err) {
-        console.log(err.statusCode);
-        var prompt = 'I didn\'t have a other bible reading for ' + date;
-        res.say(prompt).reprompt(reprompt).shouldEndSession(false).send();
-      });
-    }
+
+    var gpHelper = new GPDataHelper();
+    return gpHelper.getOtherPassage(date).then(function(otherPassage) {
+    	var prompt = 'The other passage is ' + otherPassage;
+      console.log(prompt);
+      res.say(prompt).send();
+    }).catch(function(err) {
+      console.log(err.statusCode);
+      var prompt = 'I don\'t have a other bible reading for ' + date;
+      res.say(prompt).reprompt(reprompt).shouldEndSession(false).send();
+    });
   }
 );
 
@@ -134,25 +131,19 @@ alexaApp.intent('sermonseries', {
 	},
   function(req, res) {
     //get the slot
-    var amDate = req.slot('DATE');
-    var reprompt = 'Tell me a date to get the sermon series. You can say this Sunday.';
-    if (_.isEmpty(amDate)) {
-      var prompt = 'I didn\'t hear a date. Please tell me a date.';
-      res.say(prompt).reprompt(reprompt).shouldEndSession(false);
-      return true;
-    } else {
-      var date = convertAmDate(amDate);
-      var gpHelper = new GPDataHelper();
-      return gpHelper.getSermonSeries(date).then(function(sermonSeries) {
-      	var prompt = 'The sermon series is ' + sermonSeries;
-        console.log(prompt);
-        res.say(prompt).send();
-      }).catch(function(err) {
-        console.log(err.statusCode);
-        var prompt = 'I didn\'t have a sermon series for ' + date;
-        res.say(prompt).reprompt(reprompt).shouldEndSession(false).send();
-      });
-    }
+    var date = convertAmDate(req.slot('DATE'));
+    var reprompt = 'I couln\'t get the sermon series\. Please try again\.';
+   
+    var gpHelper = new GPDataHelper();
+    return gpHelper.getSermonSeries(date).then(function(sermonSeries) {
+    	var prompt = 'The sermon series is ' + sermonSeries;
+      console.log(prompt);
+      res.say(prompt).send();
+    }).catch(function(err) {
+      console.log(err.statusCode);
+      var prompt = 'I didn\'t have a sermon series for ' + date;
+      res.say(prompt).reprompt(reprompt).shouldEndSession(false).send();
+    });
   }
 );
 
