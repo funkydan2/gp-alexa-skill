@@ -2,7 +2,7 @@
 var parsePodcast = require('node-podcast-parser');
 var request = require('request');
 
-const URI = "http://feeds.feedburner.com/GympiePresbyterianChurch";
+const URI = "https://feeds.feedburner.com/GympiePresbyterianChurch";
 
 function getPodcast(){
 	return new Promise (function (resolve, reject) {

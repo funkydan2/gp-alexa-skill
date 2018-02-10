@@ -8,7 +8,10 @@ var app = express();
     //alexaApp = new alexa.app("");
 var alexaApp = new alexa.app('');//gympiepres');
 var AmazonDateParser = require('amazon-date-parser');
+
+//My Helper Objects
 var GPDataHelper = require('./gp_data_helper');
+var GPPodcastHelper = require('./gp_podcast_helper');
 
 const PORT = process.env.PORT || 3000;
 
@@ -144,6 +147,53 @@ alexaApp.intent('sermonseries', {
       var prompt = 'I didn\'t have a sermon series for ' + date;
       res.say(prompt).reprompt(reprompt).shouldEndSession(false).send();
     });
+  }
+);
+
+alexaApp.intent('podcast', {
+    'slots': {},
+    'utterances': ['{play|listen to} {podcast|sermon|message}']
+  },
+  function(req, res) {
+    // retrieve the podcast Mpeg enclosure from the RSS feed
+    var podcast = new GPPodcastHelper();
+
+    return podcast.getLatestMP3().then(function(mp3Url) {
+      
+      var sMp3Url = mp3Url.replace('http://', 'https://');
+
+      var stream = {
+        url: sMp3Url,
+        token: sMp3Url,
+        offsetInMilliseconds: 0
+      }
+      res.audioPlayerPlayStream('REPLACE_ALL', stream);
+      res.send();
+    });
+  }
+);
+
+alexaApp.intent('AMAZON.PauseIntent', {},
+  function(req, res) {
+    console.log('app.AMAZON.PauseIntent');
+    res.audioPlayerStop();
+    res.send();
+  }
+);
+
+alexaApp.intent('AMAZON.ResumeIntent', {},
+  function(req, res) {
+    console.log('app.AMAZON.ResumeIntent');
+    if (req.context.AudioPlayer.offsetInMilliseconds > 0 &&
+      req.context.AudioPlayer.playerActivity === 'STOPPED') {
+        res.audioPlayerPlayStream('REPLACE_ALL', {
+          // hack: use token to remember the URL of the stream
+          token: req.context.AudioPlayer.token,
+          url: req.context.AudioPlayer.token,
+          offsetInMilliseconds: req.context.AudioPlayer.offsetInMilliseconds
+      });
+    }
+    res.send();
   }
 );
 
