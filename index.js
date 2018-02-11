@@ -158,13 +158,13 @@ alexaApp.intent('podcast', {
     // retrieve the podcast Mpeg enclosure from the RSS feed
     var podcast = new GPPodcastHelper();
 
-    return podcast.getLatestMP3().then(function(mp3Url) {
+    return podcast.getEpisode(0).then(function(mp3URL) {
       
-      var sMp3Url = mp3Url.replace('http://', 'https://');
-
+      var sMp3URL = mp3URL.replace('http://', 'https://');
+console.log(sMp3URL);
       var stream = {
-        url: sMp3Url,
-        token: sMp3Url,
+        url: sMp3URL,
+        token: sMp3URL,
         offsetInMilliseconds: 0
       }
       res.audioPlayerPlayStream('REPLACE_ALL', stream);

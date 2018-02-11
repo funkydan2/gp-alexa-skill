@@ -1,6 +1,8 @@
 'use strict';
 var parsePodcast = require('node-podcast-parser');
 var request = require('request');
+var _ = require('lodash');
+
 
 const URI = "https://feeds.feedburner.com/GympiePresbyterianChurch";
 
@@ -28,16 +30,18 @@ function getPodcast(){
 
 function GPPodcastHelper () {}
 
-GPPodcastHelper.prototype.getLatestMP3 = function() {
+GPPodcastHelper.prototype.getEpisode = function(episode) {
 	return getPodcast().then(function(pod){
-		console.log("URL", pod.episodes[0].enclosure.url)
-		return pod.episodes[0].enclosure.url;
+    if (_.isEmpty(episode)) { episode = 0; }
+		console.log("URL", pod.episodes[episode].enclosure.url)
+		return pod.episodes[episode].enclosure.url;
 	})
 }
 
-GPPodcastHelper.prototype.getLatestTitle = function() {
+GPPodcastHelper.prototype.getTitle = function(episode) {
 	return getPodcast().then(function(pod){
-		return pod.episodes[0].title;
+		if (_.isEmpty(episode)) { episode = 0; }
+    return pod.episodes[episode].title;
 	})
 }
 
