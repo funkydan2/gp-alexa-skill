@@ -48,10 +48,9 @@ alexaApp.express({
 app.set("view engine", "ejs");
 
 alexaApp.launch(function(req, res) {
-  var prompt = 'For information about this week\'s sermon say what is the current Sermon Series.';
+  var prompt = 'Welcome to the Gympie Presbyterian Church Skill. You can say something like play sermon.';
   res.say(prompt).reprompt(prompt).shouldEndSession(false);
 });
-
 
 alexaApp.intent('sermontitle', {
   	'slots': {
@@ -158,17 +157,17 @@ alexaApp.intent('podcast', {
     // retrieve the podcast Mpeg enclosure from the RSS feed
     var podcast = new GPPodcastHelper();
 
-    return podcast.getEpisode(0).then(function(mp3URL) {
+    return podcast.getEpisode(0).then(function(podEp) {
       
-      var sMp3URL = mp3URL.replace('http://', 'https://');
-console.log(sMp3URL);
+      var sMp3URL = podEp.mp3URL.replace('http://', 'https://');
       var stream = {
         url: sMp3URL,
         token: sMp3URL,
         offsetInMilliseconds: 0
       }
+      res.say(podEp.preRoll);
       res.audioPlayerPlayStream('REPLACE_ALL', stream);
-      res.send();
+      res.shouldEndSession(false).send();
     });
   }
 );
@@ -176,8 +175,7 @@ console.log(sMp3URL);
 alexaApp.intent('AMAZON.PauseIntent', {},
   function(req, res) {
     console.log('app.AMAZON.PauseIntent');
-    res.audioPlayerStop();
-    res.send();
+    res.audioPlayerStop().shouldEndSession(false).send();
   }
 );
 
@@ -196,6 +194,38 @@ alexaApp.intent('AMAZON.ResumeIntent', {},
     res.send();
   }
 );
+
+alexaApp.intent("AMAZON.HelpIntent", {
+    "slots": {},
+    "utterances": []
+  },
+  function(req, res) {
+    var helpOutput = "Welcome to the Gympie Presbyterian Church skill. You can play the latest sermon by saying 'play sermon', or you can find out about sermon series by asking 'what is the sermon series'.";  
+
+    var reprompt = "What would you like to do?";
+    // AMAZON.HelpIntent must leave session open -> .shouldEndSession(false)
+    res.say(helpOutput).reprompt(reprompt).shouldEndSession(false);
+  }
+);
+
+alexaApp.intent("AMAZON.StopIntent", {
+    "slots": {},
+    "utterances": []
+  }, function(req, res) {
+    var stopOutput = "Good bye. Thanks for using the Gympie Presbyterian on Alexa.";
+    res.say(stopOutput);
+  }
+);
+
+alexaApp.intent("AMAZON.CancelIntent", {
+    "slots": {},
+    "utterances": []
+  }, function(req, res) {
+    var cancelOutput = "No problem. Request cancelled.";
+    res.say(cancelOutput);
+  }
+);
+
 
 module.exports = alexaApp;
 app.listen(PORT, () => console.log("Listening on port " + PORT + "."));
