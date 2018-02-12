@@ -165,12 +165,54 @@ alexaApp.intent('podcast', {
         token: sMp3URL,
         offsetInMilliseconds: 0
       }
+      
+      //Need to store something in a database to say a user is playing a certain episode.
+      //Probably need to store User ID, Episode Number, Timestampe
+      req.getSession().set("episode", 0);
+      
       res.say(podEp.preRoll);
-      res.audioPlayerPlayStream('REPLACE_ALL', stream);
-      res.shouldEndSession(false).send();
+      res.audioPlayerPlayStream('REPLACE_ALL', stream).send();
     });
   }
 );
+
+alexaApp.intent('AMAZON.NextIntent', {},
+  function(req, res) {
+    // retrieve the podcast Mpeg enclosure from the RSS feed
+    var podcast = new GPPodcastHelper();
+  
+    var nextEp;
+    var episode = req.getSession().get("episode");
+  
+    if ( _.isUndefined(episode) ) {
+      res.say("Something has gone wrong skipping to the next track!").send();
+      return;
+    }
+    else if ( episode < 9 ) {
+      nextEp = episode + 1;
+    }
+    else{
+      res.say("No more sermons. For more sermons, visit our website.").send();
+      return;
+    }
+                    
+    return podcast.getEpisode(nextEp).then(function(podEp) {
+      
+      var sMp3URL = podEp.mp3URL.replace('http://', 'https://');
+      var stream = {
+        url: sMp3URL,
+        token: sMp3URL,
+        offsetInMilliseconds: 0
+      }
+     
+      req.getSession().set("episode", nextEp);
+      
+      res.say(podEp.preRoll);
+      res.audioPlayerPlayStream('REPLACE_ALL', stream).send();
+    });
+  
+  
+});
 
 alexaApp.intent('AMAZON.PauseIntent', {},
   function(req, res) {

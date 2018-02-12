@@ -55,8 +55,8 @@ GPPodcastHelper.prototype.getDate = function(episode) {
 GPPodcastHelper.prototype.getEpisode = function(episode) {
   //This function will return an object with a pre-roll string and the URL of the episode
   return getPodcast().then(function(pod){
-    if (_.isEmpty(episode)) {episode = 0; }
-    
+    if (_.isUndefined(episode)) {episode = 0; }   
+ 
     var prompt = "This is a sermon from Gympie Presbyterian Church called " + pod.episodes[episode].title 
                   + " it was recorded on " + pod.episodes[episode].published.toDateString();
     
