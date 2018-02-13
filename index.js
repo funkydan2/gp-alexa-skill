@@ -192,9 +192,6 @@ alexaApp.intent('AMAZON.NextIntent', {},
       res.say("No more sermons. For more sermons, visit our website.").send();
       return;
     }
-   
-console.log("Next episode is ", nextEp);  
-
   
     return podcast.getEpisode(nextEp).then(function(podEp) {
       var stream = {
@@ -206,6 +203,39 @@ console.log("Next episode is ", nextEp);
       res.audioPlayerPlayStream('REPLACE_ALL', stream).send();
     });
 });
+
+alexaApp.intent('AMAZON.PreviousIntent', {},
+  function(req, res) {
+    // retrieve the podcast Mpeg enclosure from the RSS feed
+    var podcast = new GPPodcastHelper();
+                  
+    if ( _.isUndefined(req.context.AudioPlayer.token) ) {
+      res.say("Something has gone wrong skipping to the next track!").send();
+      return;
+    }
+    else {
+          var episode = Number(req.context.AudioPlayer.token);
+    }
+    
+    if ( episode > 0 ) {
+      var prevEp = episode - 1;
+    }
+    else {
+      res.say("No more sermons. For more sermons, visit our website.").send();
+      return;
+    }
+  
+    return podcast.getEpisode(prevEp).then(function(podEp) {
+      var stream = {
+        url: podEp.mp3URL,
+        token: prevEp,
+        offsetInMilliseconds: 0
+      }      
+      res.say(podEp.preRoll);
+      res.audioPlayerPlayStream('REPLACE_ALL', stream).send();
+    });
+});
+
 
 alexaApp.intent('AMAZON.PauseIntent', {},
   function(req, res) {
