@@ -157,19 +157,15 @@ alexaApp.intent('podcast', {
     // retrieve the podcast Mpeg enclosure from the RSS feed
     var podcast = new GPPodcastHelper();
 
+    //Since this is the first request for a sermon, get the latest episode '0'
     return podcast.getEpisode(0).then(function(podEp) {
       
-      var sMp3URL = podEp.mp3URL.replace('http://', 'https://');
       var stream = {
-        url: sMp3URL,
-        token: sMp3URL,
+        url: podEp.mp3URL,
+        token: 0,
         offsetInMilliseconds: 0
       }
-      
-      //Need to store something in a database to say a user is playing a certain episode.
-      //Probably need to store User ID, Episode Number, Timestampe
-      req.getSession().set("episode", 0);
-      
+            
       res.say(podEp.preRoll);
       res.audioPlayerPlayStream('REPLACE_ALL', stream).send();
     });
@@ -180,38 +176,35 @@ alexaApp.intent('AMAZON.NextIntent', {},
   function(req, res) {
     // retrieve the podcast Mpeg enclosure from the RSS feed
     var podcast = new GPPodcastHelper();
-  
-    var nextEp;
-    var episode = req.getSession().get("episode");
-  
-    if ( _.isUndefined(episode) ) {
+                  
+    if ( _.isUndefined(req.context.AudioPlayer.token) ) {
       res.say("Something has gone wrong skipping to the next track!").send();
       return;
     }
-    else if ( episode < 9 ) {
-      nextEp = episode + 1;
+    else {
+          var episode = Number(req.context.AudioPlayer.token);
     }
-    else{
+    
+    if ( episode < 9 ) {
+      var nextEp = episode + 1;
+    }
+    else {
       res.say("No more sermons. For more sermons, visit our website.").send();
       return;
     }
-                    
+   
+console.log("Next episode is ", nextEp);  
+
+  
     return podcast.getEpisode(nextEp).then(function(podEp) {
-      
-      var sMp3URL = podEp.mp3URL.replace('http://', 'https://');
       var stream = {
-        url: sMp3URL,
-        token: sMp3URL,
+        url: podEp.mp3URL,
+        token: nextEp,
         offsetInMilliseconds: 0
-      }
-     
-      req.getSession().set("episode", nextEp);
-      
+      }      
       res.say(podEp.preRoll);
       res.audioPlayerPlayStream('REPLACE_ALL', stream).send();
     });
-  
-  
 });
 
 alexaApp.intent('AMAZON.PauseIntent', {},
@@ -223,19 +216,23 @@ alexaApp.intent('AMAZON.PauseIntent', {},
 
 alexaApp.intent('AMAZON.ResumeIntent', {},
   function(req, res) {
-    console.log('app.AMAZON.ResumeIntent');
+    console.log('app.AMAZON.ResumeIntent');  
     if (req.context.AudioPlayer.offsetInMilliseconds > 0 &&
       req.context.AudioPlayer.playerActivity === 'STOPPED') {
-        res.audioPlayerPlayStream('REPLACE_ALL', {
-          // hack: use token to remember the URL of the stream
-          token: req.context.AudioPlayer.token,
-          url: req.context.AudioPlayer.token,
-          offsetInMilliseconds: req.context.AudioPlayer.offsetInMilliseconds
-      });
-    }
-    res.send();
+      
+        var episode = req.context.AudioPlayer.token;
+        var podcast = new GPPodcastHelper();
+      
+        return podcast.getEpisodeURL(episode).then(function(URL) {
+          res.audioPlayerPlayStream('REPLACE_ALL', {
+            token: episode,
+            url: URL,
+            offsetInMilliseconds: req.context.AudioPlayer.offsetInMilliseconds
+          });
+        });
+      res.send();
   }
-);
+});
 
 alexaApp.intent("AMAZON.HelpIntent", {
     "slots": {},
@@ -254,7 +251,7 @@ alexaApp.intent("AMAZON.StopIntent", {
     "slots": {},
     "utterances": []
   }, function(req, res) {
-    var stopOutput = "Good bye. Thanks for using the Gympie Presbyterian on Alexa.";
+    var stopOutput = "Good bye. Thanks for using Gympie Presbyterian on Alexa.";
     res.say(stopOutput);
   }
 );
