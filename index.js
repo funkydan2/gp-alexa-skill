@@ -62,16 +62,22 @@ alexaApp.intent('sermontitle', {
   function(req, res) {
     //get the slot
     var date = convertAmDate(req.slot('DATE'));
+    var prompt;
     var reprompt = 'I don\'t have a sermon title for ' + date + ' Please try again';
     
     var gpHelper = new GPDataHelper();
     return gpHelper.getSermonTitle(date).then(function(sermonTitle) {
-    	var prompt = 'The sermon title is ' + sermonTitle;
+    	if (_.isUndefined(sermonTitle)) {
+        prompt = 'Sorry. We haven\'t got a sermon title yet.';
+      }
+      else {
+        prompt = 'The sermon title is ' + sermonTitle;
+      }
       console.log(prompt);
       res.say(prompt).send();
     }).catch(function(err) {
       console.log(err.statusCode);
-      var prompt = 'I don\'t have a sermon title for ' + date;
+      var prompt = 'I don\'t have a sermon title for ' + date.toString();
       res.say(prompt).reprompt(reprompt).shouldEndSession(false).send();
     });
   }
@@ -86,18 +92,23 @@ alexaApp.intent('sermonpassage', {
 	},
   function(req, res) {
     var reprompt = 'I don\'t have a sermon passage\. Please try again';
-
+    var prompt;
     //get the slot
     var date = convertAmDate(req.slot('DATE'));
     
     var gpHelper = new GPDataHelper();
     return gpHelper.getSermonPassage(date).then(function(sermonPassage) {
-    	var prompt = 'The sermon passage is ' + sermonPassage;
+    	if (_.isUndefined(sermonPassage)) {
+        prompt = 'Sorry. We haven\'t got a sermon passage yet.';
+      }
+      else {
+        prompt =  'The sermon passage is ' + sermonPassage;
+      }
       console.log(prompt);
       res.say(prompt).send();
     }).catch(function(err) {
       console.log(err.statusCode);
-      var prompt = 'I don\'t have a sermon passage for ' + date;
+      var prompt = 'I don\'t have a sermon passage for ' + date.toString();
       res.say(prompt).reprompt(reprompt).shouldEndSession(false).send();
     });
   }
@@ -112,16 +123,22 @@ alexaApp.intent('otherpassage', {
   function(req, res) {
     //get the slot
     var date = convertAmDate(req.slot('DATE'));
-    var reprompt = 'Tell me a date to get the other bible reading. You can say this Sunday.';
+    var prompt;
+    var reprompt = 'Tell me a date to get the other bible passage. You can say <emphasis level="moderate">this Sunday</emphasis> or <emphasis level="moderate">next Sunday</emphasis>.';
 
     var gpHelper = new GPDataHelper();
     return gpHelper.getOtherPassage(date).then(function(otherPassage) {
-    	var prompt = 'The other passage is ' + otherPassage;
+    	if (_.isUndefined(otherPassage)) {
+        prompt = 'Sorry. We haven\'t got an other bible passage yet.';
+      }
+      else {
+        prompt = 'The other passage is ' + otherPassage;
+      }
       console.log(prompt);
       res.say(prompt).send();
     }).catch(function(err) {
       console.log(err.statusCode);
-      var prompt = 'I don\'t have a other bible reading for ' + date;
+      var prompt = 'I don\'t have an other bible passage for ' + date.toString();
       res.say(prompt).reprompt(reprompt).shouldEndSession(false).send();
     });
   }
@@ -136,16 +153,22 @@ alexaApp.intent('sermonseries', {
   function(req, res) {
     //get the slot
     var date = convertAmDate(req.slot('DATE'));
+    var prompt;
     var reprompt = 'I couln\'t get the sermon series\. Please try again\.';
    
     var gpHelper = new GPDataHelper();
     return gpHelper.getSermonSeries(date).then(function(sermonSeries) {
-    	var prompt = 'The sermon series is ' + sermonSeries;
+    	if (_.isUndefined(sermonSeries)) {
+        prompt = 'Sorry. We haven\'t got a sermon series yet.';
+      }
+      else {
+        prompt = 'The sermon series is ' + sermonSeries;
+      }
       console.log(prompt);
       res.say(prompt).send();
     }).catch(function(err) {
       console.log(err.statusCode);
-      var prompt = 'I didn\'t have a sermon series for ' + date;
+      var prompt = 'I didn\'t have a sermon series for ' + date.toString();
       res.say(prompt).reprompt(reprompt).shouldEndSession(false).send();
     });
   }
@@ -191,7 +214,7 @@ alexaApp.intent('AMAZON.NextIntent', {},
       var nextEp = episode + 1;
     }
     else {
-      res.say("No more sermons. For more sermons, visit our website.").send();
+      res.say("No more sermons here. For more sermons, visit our website.").send();
       return;
     }
   
@@ -223,7 +246,7 @@ alexaApp.intent('AMAZON.PreviousIntent', {},
       var prevEp = episode - 1;
     }
     else {
-      res.say("No more sermons. For more sermons, visit our website.").send();
+      res.say("No more sermons here. For more sermons, visit our website.").send();
       return;
     }
   
