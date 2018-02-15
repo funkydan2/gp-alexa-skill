@@ -48,7 +48,7 @@ alexaApp.express({
 app.set("view engine", "ejs");
 
 alexaApp.launch(function(req, res) {
-  var prompt = 'Welcome to the Gympie Presbyterian Church Skill. You can say something like play sermon.';
+  var prompt = 'Welcome to the Gympie Presbyterian Church Skill. You can say something like <emphasis level="moderate">play sermon.</emphasis>';
   res.say(prompt).reprompt(prompt).shouldEndSession(false);
 });
 
@@ -56,7 +56,8 @@ alexaApp.intent('sermontitle', {
   	'slots': {
     	'DATE' : 'AMAZON.DATE'
   	},
-  		'utterances': ['{what is the|tell me the} {sermon|message} {|title} {|on|for} {-|DATE}']
+  		'utterances': ['{what the|tell me the} {sermon|message} {|title} {|is} {|on|for} {-|DATE}',
+                     '{what is the} {sermon|message} {|title} {|on|for} {-|DATE}']
 	},
   function(req, res) {
     //get the slot
@@ -80,7 +81,8 @@ alexaApp.intent('sermonpassage', {
   	'slots': {
     	'DATE' : 'AMAZON.DATE'
   	},
-  		'utterances': ['{what is the|tell me the} {sermon|message|preaching} {passage} {|on|for} {-|DATE}']
+  		'utterances': ['{what the|tell me the} {sermon|message|preaching} {|bible} {passage|reading} {|is} {|on|for} {-|DATE}',
+                    '{what is the} {sermon|message|preaching} {|bible} {passage|reading} {|on|for} {-|DATE}']
 	},
   function(req, res) {
     var reprompt = 'I don\'t have a sermon passage\. Please try again';
