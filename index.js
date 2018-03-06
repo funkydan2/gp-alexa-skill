@@ -66,6 +66,7 @@ alexaApp.intent('sermontitle', {
     function(req, res) {
         //get the slot
         var date = convertAmDate(req.slot('DATE'));
+  
         var prompt;
         var reprompt = 'I don\'t have a sermon title for ' + date + ' Please try again';
 
@@ -111,7 +112,7 @@ alexaApp.intent('sermonpassage', {
             res.say(prompt).send();
         }).catch(function(err) {
             console.log(err.statusCode);
-            var prompt = 'I don\'t have a sermon passage for ' + date.toString();
+            var prompt = 'I don\'t have a sermon passage for ' + date.toDateString();
             res.say(prompt).reprompt(reprompt).shouldEndSession(false).send();
         });
     }
