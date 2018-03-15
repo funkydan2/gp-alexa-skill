@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Gympie Pres Alexa Skill</title>
+    <title>Gympie Presbyterian Church Alexa Skill</title>
     <meta name="description" content="Alexa Skill">
     <link id="favicon" rel="icon" href="https://glitch.com/edit/favicon-app.ico" type="image/x-icon">
     <meta charset="utf-8">
@@ -12,7 +12,7 @@
   <body>
     <header>
       <h1>
-        Gympie Pres Alexa Skill
+        Gympie Presbyterian Alexa Skill
       </h1>
     </header>
 
@@ -21,11 +21,15 @@
         <div style="white-space:pre;border:1px solid black;margin:5px;padding:5px;font-family:monospace;">
 App: <%=JSON.stringify(app, null, 2)%>
 
+Skill Builder:
+<%=app.schemas.skillBuilder()%>
+<!--      Not Needed with the new Skill Builder    
 Schema:
 <%=schema%>
 
 Utterances:
 <%=utterances%>
+-->
         </div>
       </section>
     </main>
