@@ -10,7 +10,7 @@
   "author": "Daniel Saunders",
   "license": "MIT",
   "dependencies": {
-    "airtable": "^0.5.3",
+    "airtable": "^0.5.4",
     "alexa-app": "^4.2.2",
     "amazon-date-parser": "^0.2.0",
     "chai": "^4.1.2",
