@@ -1,5 +1,5 @@
 dependencies:
-  airtable: 0.5.4
+  airtable: 0.5.6
   alexa-app: 4.2.2
   amazon-date-parser: 0.2.0
   chai: 4.1.2
@@ -7,7 +7,7 @@ dependencies:
   ejs: 2.6.1
   express: 4.16.3
   lodash: 4.17.10
-  mocha: 5.1.1
+  mocha: 5.2.0
   node-podcast-parser: 2.1.0
 packages:
   /@types/chai-as-promised/7.1.0:
@@ -29,17 +29,17 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha1-63d99gEXI6OxTopywIBcjoZ0a9I=
-  /airtable/0.5.4:
+  /airtable/0.5.6:
     dependencies:
       async: 1.5.2
-      lodash: 2.4.1
+      lodash: 4.17.10
       request: 2.85.0
       xhr: 2.3.3
     dev: false
     engines:
       node: '>= 0.10.0'
     resolution:
-      integrity: sha512-3IqvH24C9aXMXJjE5rsUffXdAN2aQuWweowG04bWSF8F534p4K4NsWWTwoSFpKdasjCjv5Y7v/1RRwb+5q04hg==
+      integrity: sha512-x3dH8IQ7EO6VLMl4saTMmZNha+qTuymUmPLdawS7DvQlSdLiELFc/pbmP8+TIi9Xk6uFsOaOjqxi2/XL8TLjmg==
   /ajv/5.5.2:
     dependencies:
       co: 4.6.0
@@ -230,10 +230,10 @@ packages:
       node: '>= 0.8'
     resolution:
       integrity: sha1-cj599ugBrFYTETp+RFqbactjKBg=
-  /commander/2.11.0:
+  /commander/2.15.1:
     dev: false
     resolution:
-      integrity: sha512-b0553uYA5YAEGgyYIGYROzKQ7X5RAqedkfjiZxwi0kL1g3bOaBNNZfYkzt/CL0umgD5wc9Jec2FbB98CjkMRvQ==
+      integrity: sha512-VlfT9F3V0v+jr4yxPc5gg9s62/fIVWsd2Bk2iD435um1NlGMYdVCq+MjcXnhYq2icNOizHr1kK+5TI6H0Hy0ag==
   /concat-map/0.0.1:
     dev: false
     resolution:
@@ -446,12 +446,12 @@ packages:
       node: '>= 0.8'
     resolution:
       integrity: sha512-Y1GUDo39ez4aHAw7MysnUD5JzYX+WaIj8I57kO3aEPT1fFRL4sr7mjei97FgnwhAyyzRYmQZaTHb2+9uZ1dPtg==
-  /for-each/0.3.2:
+  /for-each/0.3.3:
     dependencies:
-      is-function: 1.0.1
+      is-callable: 1.1.3
     dev: false
     resolution:
-      integrity: sha1-LEBFC5NI6X8oEyJZO6lnBLmr1NQ=
+      integrity: sha512-jqYfLp7mo9vIyQf8ykW2v7A+2N4QjeCeI5+Dz9XraiO1ign81wjiH7Fb9vSOWvQfNtmSa4H2RoQTrrXivdUZmw==
   /forever-agent/0.6.1:
     dev: false
     resolution:
@@ -510,12 +510,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-52mJJopsdMOJCLEwWxD8DjlOnQ8=
-  /growl/1.10.3:
+  /growl/1.10.5:
     dev: false
     engines:
       node: '>=4.x'
     resolution:
-      integrity: sha512-hKlsbA5Vu3xsh1Cg3J7jSmX/WaW6A5oBeqzM88oNbCRQFz+zUaXm6yxS4RVytp1scBoJzSYl4YAEOQIt6O8V1Q==
+      integrity: sha512-qBr4OuELkhPenW6goKVXiv47US3clb3/IbuWF9KNKEijAy9oeHxU9IgzjvJhHkUzhaj7rOUD7+YGWqUjLp5oSA==
   /har-schema/2.0.0:
     dev: false
     engines:
@@ -531,12 +531,12 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha1-ukAsJmGU8VlW7xXg/PJCmT9qff0=
-  /has-flag/2.0.0:
+  /has-flag/3.0.0:
     dev: false
     engines:
-      node: '>=0.10.0'
+      node: '>=4'
     resolution:
-      integrity: sha1-6CB68cx7MNRGzHC3NLXovhj4jVE=
+      integrity: sha1-tdRU3CGZriJWmfNGfloH87lVuv0=
   /hawk/6.0.2:
     dependencies:
       boom: 4.3.1
@@ -584,7 +584,7 @@ packages:
     dependencies:
       assert-plus: 1.0.0
       jsprim: 1.4.1
-      sshpk: 1.14.1
+      sshpk: 1.14.2
     dev: false
     engines:
       node: '>=0.8'
@@ -614,6 +614,12 @@ packages:
       node: '>= 0.10'
     resolution:
       integrity: sha1-4/o1e3c9phnybpXwSdBVxyeW+Gs=
+  /is-callable/1.1.3:
+    dev: false
+    engines:
+      node: '>= 0.4'
+    resolution:
+      integrity: sha1-hut1OSgF3cM69xySoO7fdO52BLI=
   /is-function/1.0.1:
     dev: false
     resolution:
@@ -662,13 +668,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-0JF4cW/+pN3p5ft7N/bwgCJ0WAw=
-  /lodash/2.4.1:
-    dev: false
-    engines:
-      '0': node
-      '1': rhino
-    resolution:
-      integrity: sha1-W3cjA03aTSYuWkb7LFjXzCL3FCA=
   /lodash/4.17.10:
     dev: false
     resolution:
@@ -733,24 +732,24 @@ packages:
     dev: false
     resolution:
       integrity: sha1-MAV0OOrGz3+MR2fzhkjWaX11yQM=
-  /mocha/5.1.1:
+  /mocha/5.2.0:
     dependencies:
       browser-stdout: 1.3.1
-      commander: 2.11.0
+      commander: 2.15.1
       debug: 3.1.0
       diff: 3.5.0
       escape-string-regexp: 1.0.5
       glob: 7.1.2
-      growl: 1.10.3
+      growl: 1.10.5
       he: 1.1.1
       minimatch: 3.0.4
       mkdirp: 0.5.1
-      supports-color: 4.4.0
+      supports-color: 5.4.0
     dev: false
     engines:
       node: '>= 4.0.0'
     resolution:
-      integrity: sha512-kKKs/H1KrMMQIEsWNxGmb4/BGsmj0dkeyotEvbrAuQ01FcWRLssUNXCEUZk6SZtyJBi6EE7SL0zDDtItw1rGhw==
+      integrity: sha512-2IUgKDhc3J7Uug+FxMXuqIyYzH7gJjXECKe/w43IGgQHTSj3InJi+yAA7T24L9bQMRKiUEHxEX37G5JpVUGLcQ==
   /ms/2.0.0:
     dev: false
     resolution:
@@ -798,7 +797,7 @@ packages:
       integrity: sha1-WDsap3WWHUsROsF9nFC6753Xa9E=
   /parse-headers/2.0.1:
     dependencies:
-      for-each: 0.3.2
+      for-each: 0.3.3
       trim: 0.0.1
     dev: false
     resolution:
@@ -895,7 +894,7 @@ packages:
       performance-now: 2.1.0
       qs: 6.5.2
       safe-buffer: 5.1.2
-      stringstream: 0.0.5
+      stringstream: 0.0.6
       tough-cookie: 2.3.4
       tunnel-agent: 0.6.0
       uuid: 3.2.1
@@ -912,6 +911,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==
+  /safer-buffer/2.1.2:
+    dev: false
+    resolution:
+      integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
   /sax/1.1.5:
     dev: false
     resolution:
@@ -963,12 +966,13 @@ packages:
       node: '>=4.0.0'
     resolution:
       integrity: sha512-FL1b58BDrqS3A11lJ0zEdnJ3UOKqVxawAkF3k7F0CVN7VQ34aZrV+G8BZ1WC9ZL7NyrwsW0oviwsWDgRuVYtJg==
-  /sshpk/1.14.1:
+  /sshpk/1.14.2:
     dependencies:
       asn1: 0.2.3
       assert-plus: 1.0.0
       dashdash: 1.14.1
       getpass: 0.1.7
+      safer-buffer: 2.1.2
     dev: false
     engines:
       node: '>=0.10.0'
@@ -978,7 +982,7 @@ packages:
       jsbn: 0.1.1
       tweetnacl: 0.14.5
     resolution:
-      integrity: sha1-Ew9Zde3a2WPx1W+SuaxsUfqfg+s=
+      integrity: sha1-xvxhZIo9nE52T9P8306hBeSSupg=
   /statuses/1.4.0:
     dev: false
     engines:
@@ -991,18 +995,18 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha1-Fhx9rBd2Wf2YEfQ3cfqZOBR4Yow=
-  /stringstream/0.0.5:
+  /stringstream/0.0.6:
     dev: false
     resolution:
-      integrity: sha1-TkhM1N5aC7vuGORjB3EKioFiGHg=
-  /supports-color/4.4.0:
+      integrity: sha512-87GEBAkegbBcweToUrdzf3eLhWNg06FJTebl4BVJz/JgWy8CvEr9dRtX5qWphiynMSQlxxi+QqN0z5T32SLlhA==
+  /supports-color/5.4.0:
     dependencies:
-      has-flag: 2.0.0
+      has-flag: 3.0.0
     dev: false
     engines:
       node: '>=4'
     resolution:
-      integrity: sha512-rKC3+DyXWgK0ZLKwmRsrkyHVZAjNkfzeehuFWdGGcqGDTZFH73+RH6S/RDAAxl9GusSjZSUWYLmT9N5pzXFOXQ==
+      integrity: sha512-zjaXglF5nnWpsq470jSv6P9DwPvgLkuapYmfDm3JWOm0vkNTVF2tI4UrN2r6jH1qM/uc/WtxYY1hYoA2dOKj5w==
   /tough-cookie/2.3.4:
     dependencies:
       punycode: 1.4.1
@@ -1099,10 +1103,10 @@ packages:
     resolution:
       integrity: sha1-pcbVMr5lbiPbgg77lDofBJmNY68=
 registry: 'https://registry.npmjs.org/'
-shrinkwrapMinorVersion: 5
+shrinkwrapMinorVersion: 7
 shrinkwrapVersion: 3
 specifiers:
-  airtable: ^0.5.4
+  airtable: ^0.5.6
   alexa-app: ^4.2.2
   amazon-date-parser: ^0.2.0
   chai: ^4.1.2
@@ -1110,5 +1114,5 @@ specifiers:
   ejs: ^2.6.1
   express: ^4.16.3
   lodash: ^4.17.10
-  mocha: ^5.1.1
+  mocha: ^5.2.0
   node-podcast-parser: ^2.1.0
