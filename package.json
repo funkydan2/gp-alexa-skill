@@ -10,16 +10,16 @@
   "author": "Daniel Saunders",
   "license": "MIT",
   "dependencies": {
-    "airtable": "^0.5.4",
-    "alexa-app": "^4.2.2",
+    "airtable": "^0.5.10",
+    "alexa-app": "^4.2.3",
     "amazon-date-parser": "^0.2.0",
-    "chai": "^4.1.2",
+    "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
-    "mocha": "^5.1.1",
-    "lodash": "^4.17.10",
-    "express": "^4.16.3",
+    "mocha": "^6.1.4",
+    "lodash": "^4.17.11",
+    "express": "^4.16.4",
     "ejs": "^2.6.1",
-    "node-podcast-parser": "^2.1.0"
+    "node-podcast-parser": "^2.3.0"
   },
   "keywords": [
     "alexa",
