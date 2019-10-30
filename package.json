@@ -10,15 +10,15 @@
   "author": "Daniel Saunders",
   "license": "MIT",
   "dependencies": {
-    "airtable": "^0.7.0",
+    "airtable": "^0.7.2",
     "alexa-app": "^4.2.3",
-    "amazon-date-parser": "^0.2.0",
+    "amazon-date-parser": "^0.3.0",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
-    "mocha": "^6.2.0",
+    "mocha": "^6.2.1",
     "lodash": "^4.17.15",
     "express": "^4.16.4",
-    "ejs": "^2.6.2",
+    "ejs": "^2.7.1",
     "node-podcast-parser": "^2.3.0"
   },
   "keywords": [
