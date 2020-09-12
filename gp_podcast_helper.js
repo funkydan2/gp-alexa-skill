@@ -1,25 +1,27 @@
 "use strict";
-var parsePodcast = require("node-podcast-parser");
-var request = require("request");
-var _ = require("lodash");
+const parsePodcast = require("node-podcast-parser");
+const request = require("request");
+const got = require("got");
+const _ = require("lodash");
 const URI = "https://feeds.feedburner.com/GympiePresbyterianChurch";
 
 function getPodcast() {
   return new Promise(function(resolve, reject) {
-    request(URI, (err, res, data) => {
-      if (err) {
-        console.error("Network error", err);
-        reject(err);
+    (async () => {
+      try {
+        const response = await got(URI);
+        parsePodcast(response.body, (err, data) => {
+          if (err) {
+            console.error("Parsing error", err);
+            reject(err);
+          }
+          console.log("Podcast Retrieved:", data);
+          resolve(data);
+        }); 
+      } catch (error) {
+        console.log("error:", error);
       }
-      parsePodcast(data, (err, data) => {
-        if (err) {
-          console.error("Parsing error", err);
-          reject(err);
-        }
-        console.log("Podcast Retrieved:", data.title);
-        resolve(data);
-      });
-    });
+    })();
   });
 }
 
@@ -84,7 +86,7 @@ GPPodcastHelper.prototype.getEpisode = function(episode) {
         pod.episodes[episode].title +
         " it was recorded on " +
         pod.episodes[episode].published.toDateString();
-      //Alexa has to down the MP3 file over https
+      //Alexa has to download the MP3 file over https
       var mp3URL = pod.episodes[episode].enclosure.url.replace(
         "http://",
         "https://"

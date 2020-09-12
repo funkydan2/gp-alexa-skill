@@ -1,9 +1,9 @@
 "use strict";
 module.change_code = 1;
-var _ = require("lodash");
-var express = require("express");
-var alexa = require("alexa-app");
-var app = express();
+const _ = require("lodash");
+const express = require("express");
+const alexa = require("alexa-app");
+const app = express();
 
 // Setup the alexa app and attach it to express before anything else.
 var alexaApp = new alexa.app("");
@@ -199,7 +199,7 @@ alexaApp.intent(
     //get the slot
     var date = convertAmDate(req.slot("DATE"));
     var prompt;
-    var reprompt = "I couln't get the sermon series. Please try again.";
+    var reprompt = "I couldn't get the sermon series. Please try again.";
 
     var gpHelper = new GPDataHelper();
     return gpHelper

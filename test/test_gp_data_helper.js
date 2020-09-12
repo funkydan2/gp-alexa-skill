@@ -28,7 +28,7 @@ describe('GPDataHelper', function() {
   		it('returns matching bible passage', function(){
   			date = '2018-02-06';
   			var value = subject.getSermonPassage(date).then(function(sermonPassage){return sermonPassage});
-  			return expect(value).to.eventually.eq('John 4');
+  			return expect(value).to.eventually.eq('John 4:1-26');
   		});
   	});
   });
@@ -39,7 +39,7 @@ describe('GPDataHelper', function() {
   		it('returns matching bible passage', function(){
   			date = '2018-02-06';
   			var value = subject.getSermonPassage(date).then(function(sermonPassage){return sermonPassage});
-  			return expect(value).to.eventually.eq('John 4');
+  			return expect(value).to.eventually.eq('John 4:1-26');
   		});
   	});
   })

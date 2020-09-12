@@ -14,9 +14,8 @@ describe('GPPodcastHelper', function() {
   describe('#getPodcastURL', function() {
     context('with the Gympie Pres Feedburner Podcast RSS', function() {
       it('returns matching url', function() {
-        date = '2018-01-29';
         var value = subject.getEpisode(0).then(function(url) {return url});
-        return expect(value).to.eventually.eq('http://feedproxy.google.com/~r/GympiePresbyterianChurch/~5/wHLguVbVFnA/20180204_NewLife_DS.mp3');
+        return expect(value).to.eventually.eq('http://feedproxy.google.com/~r/GympiePresbyterianChurch/~5/6woNAgUjdYc/20200906_MarriageAndChrist_DS.mp3');
       })
     })
   })
