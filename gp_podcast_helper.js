@@ -1,6 +1,5 @@
 "use strict";
 const parsePodcast = require("node-podcast-parser");
-const request = require("request");
 const got = require("got");
 const _ = require("lodash");
 const URI = "https://feeds.feedburner.com/GympiePresbyterianChurch";
