@@ -14,7 +14,6 @@ function getPodcast() {
             console.error("Parsing error", err);
             reject(err);
           }
-          console.log("Podcast Retrieved:", data);
           resolve(data);
         }); 
       } catch (error) {
