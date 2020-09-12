@@ -1,10 +1,10 @@
 "use strict";
-var Airtable = require("airtable");
-var _ = require("lodash");
+const Airtable = require("airtable");
+const _ = require("lodash");
 const ENDPOINT = "https://api.airtable.com";
 const BASE = process.env.GP_AIRTABLE_BASE;
 const API_KEY = process.env.AIRTABLE_API_KEY;
-var base = new Airtable({ apiKey: API_KEY }).base(BASE);
+const base = new Airtable({ apiKey: API_KEY }).base(BASE);
 
 function getRecordForNextService(date) {
   //This function grabs the row/record from Airtable for either today (if date = a day with a service) or the next date when there is a service.
