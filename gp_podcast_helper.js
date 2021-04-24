@@ -2,7 +2,7 @@
 const parsePodcast = require("node-podcast-parser");
 const got = require("got");
 const _ = require("lodash");
-const URI = "https://feeds.feedburner.com/GympiePresbyterianChurch";
+const URI = "https://gympiepresbyterian.org.au/sermons/index.xml";
 
 function getPodcast() {
   return new Promise(function(resolve, reject) {
@@ -15,7 +15,7 @@ function getPodcast() {
             reject(err);
           }
           resolve(data);
-        }); 
+        });
       } catch (error) {
         console.log("error:", error);
       }

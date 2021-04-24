@@ -9,18 +9,21 @@
   },
   "author": "Daniel Saunders",
   "license": "MIT",
+  "engines": {
+    "node": "10.x"
+  },
   "dependencies": {
-    "airtable": "^0.10.0",
+    "airtable": "^0.11.0",
     "alexa-app": "^4.2.3",
     "amazon-date-parser": "^0.3.0",
-    "chai": "^4.2.0",
+    "chai": "^4.3.4",
     "chai-as-promised": "^7.1.1",
-    "mocha": "^8.1.3",
-    "lodash": "^4.17.20",
+    "mocha": "^8.3.2",
+    "lodash": "^4.17.21",
     "express": "^4.17.1",
-    "ejs": "^3.1.5",
+    "ejs": "^3.1.6",
     "node-podcast-parser": "^2.3.0",
-    "got": "^11.6.2"
+    "got": "^11.8.2"
   },
   "keywords": [
     "alexa",
