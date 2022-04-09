@@ -1,9 +1,8 @@
 "use strict";
 const parsePodcast = require("node-podcast-parser");
-const request = require("request");
 const got = require("got");
 const _ = require("lodash");
-const URI = "https://feeds.feedburner.com/GympiePresbyterianChurch";
+const URI = "https://gympiepresbyterian.org.au/sermons/index.xml";
 
 function getPodcast() {
   return new Promise(function(resolve, reject) {
@@ -15,9 +14,8 @@ function getPodcast() {
             console.error("Parsing error", err);
             reject(err);
           }
-          console.log("Podcast Retrieved:", data);
           resolve(data);
-        }); 
+        });
       } catch (error) {
         console.log("error:", error);
       }
