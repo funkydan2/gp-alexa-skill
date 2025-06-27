@@ -10,7 +10,7 @@
   "author": "Daniel Saunders",
   "license": "MIT",
   "engines": {
-    "node": "12.x"
+    "node": "14.x"
   },
   "dependencies": {
     "airtable": "^0.12.2",
@@ -21,7 +21,7 @@
     "mocha": "^10.2.0",
     "lodash": "^4.17.21",
     "express": "^4.18.2",
-    "ejs": "^3.1.9",
+    "ejs": "^3.1.10",
     "node-podcast-parser": "^2.3.0",
     "got": "^11.8.6"
   },
